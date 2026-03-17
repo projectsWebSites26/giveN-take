@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EcoGames</title>
+  <style>
+    :root{
+      --ink:#333;
+      --muted:#606060;
+      --bg:#f3f3f3;
+      --panel:#ffffff;
+      --cta:#D76907;
+      --cta-hover:#c45f06;
+      --cta-active:#a94f05;
+      --header-bg:#2A83DD;
+      --hero-bg:#226BB4;
+      --band-light:#C8F6FF;
+      --band-green:#82D153;
+      --radius:10px;
+      --max:1100px;
+      --pad:clamp(16px, 2vw, 24px);
+      --header-h:70px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      padding-top:var(--header-h);
+      font:18px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+    }
+
+    img{max-width:100%; display:block}
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 var(--pad);
+    }
+
+    header{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:var(--header-h);
+      background:var(--header-bg);
+      z-index:50;
+      box-shadow:0 6px 16px rgba(0,0,0,.06);
+    }
+
+    .nav{
+      height:100%;
+      display:flex;
+      align-items:center;
+      gap:28px;
+    }
+
+    .logo{
+      width:70px;
+      height:70px;
+      background:url("sources/logo.png") center/cover no-repeat;
+      flex:0 0 auto;
+    }
+
+    .menu{
+      margin-left:auto;
+      display:flex;
+      gap:20px;
+    }
+
+    .menu a{
+      font-weight:600;
+      font-size:.95rem;
+      color:#fff;
+    }
+
+    .burger{
+      display:none;
+      margin-left:auto;
+      background:none;
+      border:0;
+      width:44px;
+      height:44px;
+      position:relative;
+      cursor:pointer;
+    }
+
+    .burger .bar{
+      position:absolute;
+      left:10px;
+      right:10px;
+      height:2px;
+      background:#fff;
+      transition:transform .25s ease, opacity .2s ease;
+    }
+
+    .burger .bar:nth-child(1){top:14px}
+    .burger .bar:nth-child(2){top:21px}
+    .burger .bar:nth-child(3){top:28px}
+
+    .burger.is-open .bar:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .burger.is-open .bar:nth-child(2){opacity:0}
+    .burger.is-open .bar:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.35);
+      display:none;
+      z-index:55;
+    }
+
+    .drawer{
+      position:fixed;
+      top:0;
+      right:0;
+      bottom:0;
+      width:min(84vw,360px);
+      background:#fff;
+      transform:translateX(100%);
+      transition:transform .28s ease;
+      box-shadow:-12px 0 24px rgba(0,0,0,.12);
+      z-index:60;
+      font-weight:600;
+    }
+
+    .drawer .inner{padding:20px}
+
+    .drawer a{
+      display:block;
+      padding:14px 0;
+      border-bottom:1px solid rgba(0,0,0,.06);
+      transition:background-color .2s ease;
+    }
+
+    .drawer a:hover{
+      background-color:#f2f2f2;
+    }
+
+    .drawer a:active{
+      background-color:#dcdcdc;
+    }
+
+    .overlay.show{display:block}
+    .drawer.show{transform:translateX(0)}
+
+    .hero{
+      background:var(--hero-bg);
+      min-height:300px;
+      background:url("sources/mappa2.png") center/cover no-repeat;
+      position:relative;
+    }
+
+    .hero .wrap{
+      padding-left:var(--pad);
+      padding-right:var(--pad);
+    }
+
+    .hero-inner{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:20px;
+      padding:80px 0 40px;
+      position:relative;
+    }
+
+    .hero-copy{
+      color:#fff;
+      padding:40px 0;
+      max-width:760px;
+      margin:0 auto;
+      text-align:center;
+    }
+
+    .hero h1{
+      font-weight:900;
+      font-size:clamp(36px, 12vw, 78px);
+      line-height:1;
+      margin:0;
+    }
+
+    .hero p{
+      opacity:.8;
+      max-width:38ch;
+      font-weight:400;
+      font-size:clamp(21px, 5vw, 25px);
+      margin:16px auto 0;
+    }
+
+    .hero-copy .btn{
+      display:inline-block;
+      margin-top:20px;
+    }
+
+    .btn{
+      background:var(--cta);
+      color:#fff;
+      border:0;
+      padding:12px 20px;
+      border-radius:12px;
+      font-weight:700;
+      font-size:1.05rem;
+      cursor:pointer;
+      transition:background-color .2s ease, transform .1s ease;
+    }
+
+    .btn:hover{
+      background-color:var(--cta-hover);
+    }
+
+    .btn:active{
+      background-color:var(--cta-active);
+      transform:scale(0.98);
+    }
+
+    .hero-img{
+      height:min(48vw, 200px);
+      background:url("Bozza sito_1-01.png") center/cover no-repeat;
+      border-radius:0;
+    }
+
+    .scroll-indicator{
+      display:none;
+      opacity:1;
+      transition:opacity .3s ease;
+    }
+
+    .scroll-indicator.hide{
+      opacity:0;
+    }
+
+    .text-block{
+      background:#fff;
+      padding:56px 0;
+    }
+
+    .text-block .inner{
+      max-width:800px;
+      margin:0 auto;
+      text-align:center;
+    }
+
+    .text-block h3{
+      margin:0 0 20px;
+      font-size:1.4rem;
+    }
+
+    .text-block p{
+      color:#333;
+    }
+
+    .text-block .btn{
+      margin-top:18px;
+    }
+
+    .band{
+      background:var(--band-light);
+      padding:40px 0;
+    }
+
+    .band h3{
+      text-align:center;
+      margin:0 0 20px;
+      font-size:1.4rem;
+    }
+
+    .band .grid{
+      display:grid;
+      gap:20px;
+      grid-template-columns:repeat(4, 1fr);
+    }
+
+    .band .ph{
+      height:250px;
+      background:#000;
+      border-radius:6px;
+    }
+
+    .cap{
+      font-size:1.1rem;
+      text-align:center;
+      padding:8px 0 0;
+      line-height:1.3;
+    }
+
+    .para{
+      background:#efefef;
+      padding:48px 0;
+    }
+
+    .para .inner{
+      max-width:800px;
+      margin:0 auto;
+      text-align:center;
+      color:#333;
+    }
+
+    .band-title{
+      background:var(--band-green);
+      padding:32px 0;
+    }
+
+    .band-title h3{
+      text-align:center;
+      margin:0 0 20px;
+    }
+
+    .band-title .grid{
+      display:grid;
+      gap:16px;
+      grid-template-columns:repeat(8, 1fr);
+    }
+
+    .band-title .ph-square{
+      aspect-ratio:1/1;
+      background:#000;
+      border-radius:4px;
+    }
+
+    .about{
+      background:#efefef;
+      padding:36px 0;
+      text-align:center;
+    }
+
+    .about h4{
+      margin:0 0 8px;
+    }
+
+    .line{
+      height:1px;
+      background:#000;
+      opacity:.2;
+      margin:8px 0 12px;
+    }
+
+    .about p{
+      color:#333;
+      max-width:800px;
+      margin:0 auto;
+    }
+
+    .about .triple-wrapper{
+      padding:0 var(--pad);
+    }
+
+    .about .triple{
+      display:flex;
+      gap:16px;
+      margin-top:40px;
+      justify-content:center;
+    }
+
+    .about .triple .ph-square{
+      aspect-ratio:1/1;
+      background:#000;
+      border-radius:4px;
+      flex:0 0 min(140px, calc((100% - 32px)/3));
+      max-width:140px;
+    }
+
+    .final-cta{
+      background:#efefef;
+      padding:24px 0 72px;
+      text-align:center;
+    }
+	
+	.cta-note{
+	  margin-top:10px;
+	  font-size:.75rem;
+	  color:#777;
+	}
+
+    .footer{
+      position:relative;
+      background:#2A83DD;
+      color:#fff;
+      padding:16px 0;
+    }
+
+    .footer .wrap{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .footer .privacy{
+      cursor:pointer;
+      text-decoration:underline;
+    }
+
+    .privacy-box{
+      position:absolute;
+      left:0;
+      bottom:100%;
+      width:100%;
+      background:#fff;
+      color:#000;
+      max-height:0;
+      overflow:hidden;
+      padding:0 20px;
+      transition:max-height .3s ease, padding .3s ease;
+      box-shadow:0 -4px 12px rgba(0,0,0,0.1);
+    }
+
+    .privacy-box.open{
+      max-height:260px;
+      padding:20px;
+    }
+
+    .privacy-box p{
+      margin:0;
+    }
+
+    @media (max-width:1100px){
+      .band-title .grid{
+        grid-template-columns:repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width:900px){
+      .band .grid{
+        grid-template-columns:repeat(2, 1fr);
+      }
+
+      .band-title .grid{
+        grid-template-columns:repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width:1920px){
+      .hero{
+        min-height:600px;
+      }
+
+      .hero-inner{
+        min-height:600px;
+      }
+
+      .scroll-indicator{
+        display:block;
+        position:absolute;
+        left:50%;
+        bottom:20px;
+        transform:translateX(-50%);
+        font-size:50px;
+        color:#fff;
+        animation:bounce 1.5s infinite;
+        pointer-events:none;
+      }
+
+      @keyframes bounce{
+        0%, 100%{
+          transform:translate(-50%, 0);
+        }
+        50%{
+          transform:translate(-50%, 10px);
+        }
+      }
+    }
+
+    @media (max-width:680px){
+      .menu{
+        display:none;
+      }
+
+      .burger{
+        display:block;
+      }
+    }
+
+    @media (max-width:400px){
+      .band .ph{
+        height:240px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="logo"></div>
+
+      <nav class="menu" aria-label="Main navigation">
+        <a href="#sec-hero" data-target="sec-hero">Home</a>
+        <a href="#sec-text" data-target="sec-text">Intro</a>
+        <a href="#sec-band4" data-target="sec-band4">Le sfide</a>
+        <a href="#sec-band8" data-target="sec-band8">I temi</a>
+        <a href="#sec-about" data-target="sec-about">About</a>
+      </nav>
+
+      <button class="burger" id="burger" aria-label="Apri menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero" id="sec-hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <h1>ECOGAMES</h1>
+        <p>Giocare per capire la sostenibilità</p>
+        <button class="btn" onclick="scrollWithOffset('sec-about')">Dove lo trovo?</button>
+      </div>
+
+      <div class="hero-img" role="img" aria-label="Immagine del progetto"></div>
+
+      <div class="scroll-indicator">↓</div>
+    </div>
+  </section>
+
+  <section class="text-block" id="sec-text">
+    <div class="wrap inner">
+      <h3>Un gioco per capire come funziona la sostenibilità</h3>
+      <p>
+        EcoGames è un gioco progettato per avvicinare studenti e giovani ai temi della sostenibilità e agli Obiettivi di Sviluppo Sostenibile (SDGs) dell’Agenda 2030.<br>
+        Attraverso dinamiche di gioco collaborative, i partecipanti affrontano sfide globali come il cambiamento climatico, la gestione delle risorse e le disuguaglianze sociali. Il progetto nasce con l’obiettivo di rendere l’educazione alla sostenibilità più coinvolgente, accessibile e interattiva.<br>
+        Il gioco è stato sviluppato seguendo un approccio di progettazione centrato sugli utenti e coinvolgendo direttamente studenti nel processo creativo.
+      </p>
+      <button class="btn" onclick="scrollWithOffset('sec-band4')">Scopri come funziona</button>
+    </div>
+  </section>
+
+  <section class="band" id="sec-band4">
+    <div class="wrap">
+      <h3>Le sfide della sostenibilità</h3>
+      <div class="grid">
+        <div>
+          <div class="ph"></div>
+          <div class="cap"><b>Cambiamento climatico: </b><br>affronta eventi legati al clima e trova strategie per ridurre l’impatto ambientale.</div>
+        </div>
+        <div>
+          <div class="ph"></div>
+          <div class="cap"><b>Gestione delle risorse: </b><br>bilancia risorse economiche, ambientali e sociali per mantenere il benessere del tuo paese.</div>
+        </div>
+        <div>
+          <div class="ph"></div>
+          <div class="cap"><b>Cooperazione tra paesi: </b><br>collabora con altri paesi per affrontare sfide globali e raggiungere obiettivi comuni.</div>
+        </div>
+        <div>
+          <div class="ph"></div>
+          <div class="cap"><b>Decisioni strategiche: </b><br>ogni scelta ha conseguenze, quindi valuta rischi e opportunità per costruire un futuro sostenibile.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="para">
+    <div class="wrap inner">
+      <p>
+        Nel gioco ogni partecipante rappresenta un paese e deve affrontare eventi ispirati a problemi globali reali. I giocatori devono cooperare, negoziare e scambiarsi risorse per mantenere l’equilibrio economico e sociale dei propri territori.<br>
+        Attraverso queste dinamiche il gioco stimola riflessione, collaborazione e consapevolezza sulle sfide della sostenibilità.
+      </p>
+    </div>
+  </section>
+
+  <section class="band-title" id="sec-band8">
+    <div class="wrap">
+      <h3>I temi dell’Agenda 2030</h3>
+      <div class="grid">
+        <div class="ph-square"></div>
+        <div class="ph-square"></div>
+        <div class="ph-square"></div>
+        <div class="ph-square"></div>
+        <div class="ph-square"></div>
+        <div class="ph-square"></div>
+        <div class="ph-square"></div>
+        <div class="ph-square"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="sec-about">
+    <div class="wrap">
+      <h4>About</h4>
+      <div class="line"></div>
+      <p>
+        EcoGames è un progetto educativo che utilizza il gioco per aiutare studenti e giovani a comprendere i temi della sostenibilità in modo semplice, coinvolgente e collaborativo. Attraverso scenari ispirati a sfide globali reali, il gioco stimola il pensiero critico, il dialogo e la cooperazione tra i partecipanti, trasformando l’apprendimento in un’esperienza attiva.
+      </p>
+      <div class="triple-wrapper">
+        <div class="triple">
+          <div class="ph-square"></div>
+          <div class="ph-square"></div>
+          <div class="ph-square"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+	  <div class="wrap">
+		<button class="btn">Scopri il gioco</button>
+		<p class="cta-note">Cliccando sul pulsante verrai reindirizzato allo store per il download.</p>
+	  </div>
+	</section>
+
+  <div class="overlay" id="overlay"></div>
+  
+  <footer class="footer">
+    <div class="privacy-box" id="privacyBox">
+      <p>
+        Questo sito è una landing page informativa ospitata su GitHub Pages.<br>
+        Non raccogliamo volontariamente dati personali tramite moduli di contatto, registrazione o newsletter.<br>
+        Durante la navigazione possono essere trattati dati tecnici necessari al funzionamento e alla sicurezza del servizio di hosting, secondo quanto previsto da GitHub.<br>
+        Il sito contiene collegamenti verso siti esterni, che sono soggetti alle rispettive informative privacy.
+      </p>
+    </div>
+
+    <div class="wrap">
+      <div>GiveNtake</div>
+      <div class="privacy" onclick="togglePrivacy()">Privacy</div>
+    </div>
+  </footer>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="inner">
+      <nav aria-label="Mobile navigation">
+        <a href="#sec-hero" data-target="sec-hero">Home</a>
+        <a href="#sec-text" data-target="sec-text">Intro</a>
+        <a href="#sec-band4" data-target="sec-band4">Le sfide</a>
+        <a href="#sec-band8" data-target="sec-band8">I temi</a>
+        <a href="#sec-about" data-target="sec-about">About</a>
+      </nav>
+    </div>
+  </aside>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+
+    function toggleMenu(show){
+      drawer.classList.toggle('show', show);
+      overlay.classList.toggle('show', show);
+      burger.classList.toggle('is-open', show);
+      burger.setAttribute('aria-expanded', String(show));
+      document.body.style.overflow = show ? 'hidden' : '';
+    }
+
+    if (burger) {
+      burger.addEventListener('click', () => {
+        const open = !drawer.classList.contains('show');
+        toggleMenu(open);
+      });
+    }
+
+    if (overlay) {
+      overlay.addEventListener('click', () => toggleMenu(false));
+    }
+
+    function scrollWithOffset(id){
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const headerOffset = parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-h')
+      );
+
+      const y = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
+
+    function wireLinks(scope){
+      scope.querySelectorAll('a[data-target]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = a.getAttribute('data-target');
+          scrollWithOffset(id);
+          toggleMenu(false);
+        });
+      });
+    }
+
+    wireLinks(document);
+    wireLinks(drawer);
+
+    function togglePrivacy(){
+      const box = document.getElementById('privacyBox');
+      box.classList.toggle('open');
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!scrollIndicator) return;
+
+      if (window.scrollY > 20) {
+        scrollIndicator.classList.add('hide');
+      } else {
+        scrollIndicator.classList.remove('hide');
+      }
+    });
+  </script>
+</body>
+</html>
