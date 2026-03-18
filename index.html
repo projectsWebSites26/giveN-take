@@ -315,24 +315,53 @@
       text-align:center;
       color:#333;
     }
+	
+	.para .inner p{
+	  margin:0;
+	}
 
     .para-icons{
-      margin-top:28px;
+      margin-top:24px;
       display:flex;
       justify-content:center;
       align-items:center;
       gap:18px;
       flex-wrap:wrap;
     }
+	
+	.para-icons-top{
+	  margin-top:24px;
+	  margin-bottom:28px;
+	  display:grid;
+	  grid-template-columns:repeat(6, 100px);
+	  justify-content:center;
+	  gap:18px;
+	}
+	
+	.para-icons-bottom{
+	  margin-top:24px;
+	  display:flex;
+	  justify-content:center;
+	  align-items:center;
+	  gap:18px;
+	  flex-wrap:wrap;
+	}
+
+	.para-text-bottom{
+	  margin-top:0;
+	}
+
+	.para-icons-bottom{
+	  margin-top:24px;
+	}
 
     .para-icon{
-      width:70px;
-      height:70px;
-      flex:0 0 70px;
-      object-fit:contain;
-      display:block;
-    }
-
+	  width:100px;
+	  height:100px;
+	  object-fit:contain;
+	  display:block;
+	}
+	
     .band-title{
       background:var(--band-green);
       padding:32px 0;
@@ -623,13 +652,36 @@
         font-size:.72rem;
         padding:8px;
       }
-
-      .para-icon{
-        width:56px;
-        height:56px;
-        flex-basis:56px;
-      }
     }
+	
+	@media (max-width:600px){
+	  .para-icons-top{
+		grid-template-columns:repeat(3, 70px);
+	  }
+
+	  .para-icons-bottom{
+		max-width:180px;
+		margin-left:auto;
+		margin-right:auto;
+		justify-content:center;
+	  }
+	}
+
+	@media (max-width:400px){
+	  .para-icon{
+		width:56px;
+		height:56px;
+	  }
+
+	  .para-icons-top{
+		grid-template-columns:repeat(3, 56px);
+		gap:14px;
+	  }
+
+	  .para-icons-bottom{
+		gap:14px;
+	  }
+	}
   </style>
 </head>
 <body>
@@ -658,7 +710,7 @@
       <div class="hero-copy">
         <h1>ECOGAMES</h1>
         <p>Giocare per capire la sostenibilità</p>
-        <button class="btn" onclick="scrollWithOffset('sec-about')">Dove lo trovo?</button>
+        <button class="btn" onclick="scrollWithOffset('sec-about')">inizia adesso</button>
       </div>
 
       <div class="hero-img" role="img" aria-label="Immagine del progetto"></div>
@@ -668,10 +720,10 @@
 
   <section class="text-block" id="sec-text">
     <div class="wrap inner">
-      <h3>Un gioco per capire come funziona la sostenibilità</h3>
+      <h3>Un gioco per capire la sostenibilità</h3>
       <p>
-        EcoGames è un gioco progettato per avvicinare studenti e giovani ai temi della sostenibilità e agli Obiettivi di Sviluppo Sostenibile (SDGs) dell’Agenda 2030.<br>
-        Attraverso dinamiche di gioco collaborative, i partecipanti affrontano sfide globali come il cambiamento climatico, la gestione delle risorse e le disuguaglianze sociali. Il progetto nasce con l’obiettivo di rendere l’educazione alla sostenibilità più coinvolgente, accessibile e interattiva.<br>
+        <b>EcoGames</b> è un gioco progettato per avvicinare studenti e giovani ai <b>temi della sostenibilità e agli Obiettivi di Sviluppo Sostenibile (SDGs) </b>dell’Agenda 2030.<br>
+        Attraverso dinamiche di gioco collaborative, ma allo stesso anche competitive, i partecipanti affrontano sfide globali come il cambiamento climatico, la gestione delle risorse e le disuguaglianze sociali. Il progetto nasce con l’obiettivo di rendere l’educazione alla sostenibilità più coinvolgente, accessibile e interattiva.<br>
         Il gioco è stato sviluppato seguendo un approccio di progettazione centrato sugli utenti e coinvolgendo direttamente studenti nel processo creativo.
       </p>
       <button class="btn" onclick="scrollWithOffset('sec-band4')">Scopri come funziona</button>
@@ -703,21 +755,33 @@
   </section>
 
   <section class="para">
-    <div class="wrap inner">
-      <p>
-        Nel gioco ogni partecipante rappresenta un paese e deve affrontare eventi ispirati a problemi globali reali. I giocatori devono cooperare, negoziare e scambiarsi risorse per mantenere l’equilibrio economico e sociale dei propri territori.<br>
-        Attraverso queste dinamiche il gioco stimola riflessione, collaborazione e consapevolezza sulle sfide della sostenibilità.
-      </p>
+	  <div class="wrap inner">
+		<p>
+		  Nel gioco <b>ogni partecipante rappresenta un paese</b> e si trova ad affrontare eventi ispirati a sfide globali reali, che possono essere positivi o negativi, portando alla conquista o alla perdita di risorse e costringendo a prendere decisioni strategiche.
+		</p>
 
-      <div class="para-icons" aria-label="Icone caratteristiche del gioco">
-        <img class="para-icon" src="sources/icona_1.png" alt="Icona 1">
-        <img class="para-icon" src="sources/icona_2.png" alt="Icona 2">
-        <img class="para-icon" src="sources/icona_3.png" alt="Icona 3">
-        <img class="para-icon" src="sources/icona_4.png" alt="Icona 4">
-        <img class="para-icon" src="sources/icona_5.png" alt="Icona 5">
-      </div>
-    </div>
-  </section>
+		<div class="para-icons para-icons-top" aria-label="Prime sei icone del gioco">
+		  <img class="para-icon" src="sources/icona_top_1.png" alt="Icona 1">
+		  <img class="para-icon" src="sources/icona_top_2.png" alt="Icona 2">
+		  <img class="para-icon" src="sources/icona_top_3.png" alt="Icona 3">
+		  <img class="para-icon" src="sources/icona_top_4.png" alt="Icona 4">
+		  <img class="para-icon" src="sources/icona_top_5.png" alt="Icona 5">
+		  <img class="para-icon" src="sources/icona_top_6.png" alt="Icona 6">
+		</div>
+
+		<p class="para-text-bottom">
+		  I giocatori devono <b>cooperare, negoziare e scambiarsi risorse per mantenere l’equilibrio economico e sociale dei propri territori</b>.<br>
+		  Attraverso queste dinamiche il gioco vuole stimolare la riflessione, la collaborazione e la consapevolezza sulle sfide della sostenibilità.
+		</p>
+
+		<div class="para-icons para-icons-bottom" aria-label="Seconde quattro icone del gioco">
+		  <img class="para-icon" src="sources/icona_1.png" alt="Icona 1">
+		  <img class="para-icon" src="sources/icona_2.png" alt="Icona 2">
+		  <img class="para-icon" src="sources/icona_3.png" alt="Icona 3">
+		  <img class="para-icon" src="sources/icona_4.png" alt="Icona 4">
+		</div>
+	  </div>
+	</section>
 
   <section class="band-title" id="sec-band8">
     <div class="wrap">
@@ -943,7 +1007,7 @@
 
   <section class="final-cta">
     <div class="wrap">
-      <button class="btn">Scopri il gioco</button>
+      <button class="btn">Presto disponibile</button>
       <p class="cta-note">Cliccando sul pulsante verrai reindirizzato allo store per il download.</p>
     </div>
   </section>
