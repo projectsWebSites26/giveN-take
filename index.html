@@ -170,6 +170,7 @@
       gap:20px;
       padding:80px 0 40px;
       position:relative;
+      min-height:600px;
     }
 
     .hero-copy{
@@ -227,13 +228,26 @@
     }
 
     .scroll-indicator{
-      display:none;
+      display:block;
+      position:absolute;
+      left:50%;
+      bottom:20px;
+      transform:translateX(-50%);
+      font-size:50px;
+      color:#fff;
+      animation:bounce 1.5s infinite;
+      pointer-events:none;
       opacity:1;
       transition:opacity .3s ease;
     }
 
     .scroll-indicator.hide{
       opacity:0;
+    }
+
+    @keyframes bounce{
+      0%, 100%{ transform:translate(-50%, 0); }
+      50%{ transform:translate(-50%, 10px); }
     }
 
     .text-block{
@@ -302,6 +316,23 @@
       color:#333;
     }
 
+    .para-icons{
+      margin-top:28px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .para-icon{
+      width:70px;
+      height:70px;
+      flex:0 0 70px;
+      object-fit:contain;
+      display:block;
+    }
+
     .band-title{
       background:var(--band-green);
       padding:32px 0;
@@ -312,16 +343,138 @@
       margin:0 0 20px;
     }
 
-    .band-title .grid{
+    .themes-layout{
       display:grid;
-      gap:16px;
-      grid-template-columns:repeat(8, 1fr);
+      grid-template-columns:52px minmax(0, 1fr) 52px;
+      align-items:center;
+      gap:12px;
     }
 
-    .band-title .ph-square{
+    .themes-shell{
+      min-width:0;
+    }
+
+    .themes-scroll{
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling:touch;
+      scroll-behavior:smooth;
+      scrollbar-width:none;
+      cursor:grab;
+      scroll-snap-type:x mandatory;
+      scroll-padding-left:0;
+    }
+
+    .themes-scroll:active{
+      cursor:grabbing;
+    }
+
+    .themes-scroll::-webkit-scrollbar{
+      display:none;
+    }
+
+    .themes-track{
+      display:flex;
+      flex-wrap:nowrap;
+      gap:16px;
+      width:max-content;
+    }
+
+    .theme-card{
+      flex:0 0 120px;
+      width:120px;
       aspect-ratio:1/1;
+      background:transparent;
+      border:0;
+      padding:0;
+      perspective:1000px;
+      cursor:pointer;
+      scroll-snap-align:start;
+      scroll-snap-stop:always;
+    }
+
+    .theme-card:focus-visible{
+      outline:3px solid rgba(255,255,255,.9);
+      outline-offset:4px;
+      border-radius:10px;
+    }
+
+    .theme-card-inner{
+      position:relative;
+      width:100%;
+      height:100%;
+      transform-style:preserve-3d;
+      transition:transform .7s ease;
+    }
+
+    .theme-card.is-flipped .theme-card-inner{
+      transform:rotateY(180deg);
+    }
+
+    .theme-card-face{
+      position:absolute;
+      inset:0;
+      border-radius:8px;
+      overflow:hidden;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
+    }
+
+    .theme-card-front{
       background:#000;
-      border-radius:4px;
+    }
+
+    .theme-card-front img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .theme-card-back{
+      background:#fff;
+      color:#333;
+      transform:rotateY(180deg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:10px;
+      font-size:.8rem;
+      line-height:1.25;
+      font-weight:700;
+      border:2px solid rgba(0,0,0,.08);
+    }
+
+    .themes-arrow{
+      width:42px;
+      height:42px;
+      border:0;
+      border-radius:50%;
+      background:rgba(255,255,255,.92);
+      color:#333;
+      font-size:24px;
+      line-height:1;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 6px 18px rgba(0,0,0,.16);
+      transition:transform .2s ease, opacity .2s ease, background-color .2s ease;
+      flex:0 0 auto;
+    }
+
+    .themes-arrow:hover{
+      background:#fff;
+    }
+
+    .themes-arrow:active{
+      transform:scale(.96);
+    }
+
+    .themes-arrow[disabled]{
+      opacity:.45;
+      cursor:default;
     }
 
     .about{
@@ -371,12 +524,12 @@
       padding:24px 0 72px;
       text-align:center;
     }
-	
-	.cta-note{
-	  margin-top:10px;
-	  font-size:.75rem;
-	  color:#777;
-	}
+
+    .cta-note{
+      margin-top:10px;
+      font-size:.75rem;
+      color:#777;
+    }
 
     .footer{
       position:relative;
@@ -419,50 +572,19 @@
       margin:0;
     }
 
-    @media (max-width:1100px){
-      .band-title .grid{
-        grid-template-columns:repeat(4, 1fr);
-      }
-    }
-
     @media (max-width:900px){
       .band .grid{
         grid-template-columns:repeat(2, 1fr);
       }
-
-      .band-title .grid{
-        grid-template-columns:repeat(2, 1fr);
-      }
     }
 
-    @media (max-width:1920px){
+    @media (max-width:700px){
       .hero{
         min-height:600px;
       }
 
       .hero-inner{
         min-height:600px;
-      }
-
-      .scroll-indicator{
-        display:block;
-        position:absolute;
-        left:50%;
-        bottom:20px;
-        transform:translateX(-50%);
-        font-size:50px;
-        color:#fff;
-        animation:bounce 1.5s infinite;
-        pointer-events:none;
-      }
-
-      @keyframes bounce{
-        0%, 100%{
-          transform:translate(-50%, 0);
-        }
-        50%{
-          transform:translate(-50%, 10px);
-        }
       }
     }
 
@@ -479,6 +601,33 @@
     @media (max-width:400px){
       .band .ph{
         height:240px;
+      }
+
+      .themes-layout{
+        grid-template-columns:40px minmax(0, 1fr) 40px;
+        gap:8px;
+      }
+
+      .themes-arrow{
+        width:36px;
+        height:36px;
+        font-size:20px;
+      }
+
+      .theme-card{
+        flex:0 0 100px;
+        width:100px;
+      }
+
+      .theme-card-back{
+        font-size:.72rem;
+        padding:8px;
+      }
+
+      .para-icon{
+        width:56px;
+        height:56px;
+        flex-basis:56px;
       }
     }
   </style>
@@ -513,7 +662,6 @@
       </div>
 
       <div class="hero-img" role="img" aria-label="Immagine del progetto"></div>
-
       <div class="scroll-indicator">↓</div>
     </div>
   </section>
@@ -535,19 +683,19 @@
       <h3>Le sfide della sostenibilità</h3>
       <div class="grid">
         <div>
-          <div class="ph" style="background:url(sources/sfide_1.png) center/cover no-repeat;"></div>
+          <div class="ph" style="background:url('sources/sfide_1.png') center/cover no-repeat;"></div>
           <div class="cap"><b>Cambiamento climatico: </b><br>affronta eventi legati al clima e trova strategie per ridurre l’impatto ambientale.</div>
         </div>
         <div>
-          <div class="ph" style="background:url(sources/sfide_2.png) center/cover no-repeat;"></div>
+          <div class="ph" style="background:url('sources/sfide_2.png') center/cover no-repeat;"></div>
           <div class="cap"><b>Gestione delle risorse: </b><br>bilancia risorse economiche, ambientali e sociali per mantenere il benessere del tuo paese.</div>
         </div>
         <div>
-          <div class="ph" style="background:url(sources/sfide_3.png) center/cover no-repeat;"></div>
+          <div class="ph" style="background:url('sources/sfide_3.png') center/cover no-repeat;"></div>
           <div class="cap"><b>Cooperazione tra paesi: </b><br>collabora con altri paesi per affrontare sfide globali e raggiungere obiettivi comuni.</div>
         </div>
         <div>
-          <div class="ph" style="background:url(sources/sfide_4.png) center/cover no-repeat;"></div>
+          <div class="ph" style="background:url('sources/sfide_4.png') center/cover no-repeat;"></div>
           <div class="cap"><b>Decisioni strategiche: </b><br>ogni scelta ha conseguenze, quindi valuta rischi e opportunità per costruire un futuro sostenibile.</div>
         </div>
       </div>
@@ -560,21 +708,218 @@
         Nel gioco ogni partecipante rappresenta un paese e deve affrontare eventi ispirati a problemi globali reali. I giocatori devono cooperare, negoziare e scambiarsi risorse per mantenere l’equilibrio economico e sociale dei propri territori.<br>
         Attraverso queste dinamiche il gioco stimola riflessione, collaborazione e consapevolezza sulle sfide della sostenibilità.
       </p>
+
+      <div class="para-icons" aria-label="Icone caratteristiche del gioco">
+        <img class="para-icon" src="sources/icona_1.png" alt="Icona 1">
+        <img class="para-icon" src="sources/icona_2.png" alt="Icona 2">
+        <img class="para-icon" src="sources/icona_3.png" alt="Icona 3">
+        <img class="para-icon" src="sources/icona_4.png" alt="Icona 4">
+        <img class="para-icon" src="sources/icona_5.png" alt="Icona 5">
+      </div>
     </div>
   </section>
 
   <section class="band-title" id="sec-band8">
     <div class="wrap">
       <h3>I temi dell’Agenda 2030</h3>
-      <div class="grid">
-        <div class="ph-square"></div>
-        <div class="ph-square"></div>
-        <div class="ph-square"></div>
-        <div class="ph-square"></div>
-        <div class="ph-square"></div>
-        <div class="ph-square"></div>
-        <div class="ph-square"></div>
-        <div class="ph-square"></div>
+
+      <div class="themes-layout">
+        <button class="themes-arrow" id="themesPrev" aria-label="Scorri a sinistra">‹</button>
+
+        <div class="themes-shell">
+          <div class="themes-scroll" id="themesScroll">
+            <div class="themes-track" id="themesTrack">
+              <button class="theme-card" type="button" aria-label="Tema 1">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_1.png" alt="Povertà zero">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Eliminare la povertà in tutte le sue forme.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 2">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_2.png" alt="Fame zero">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Garantire cibo, nutrizione e agricoltura sostenibile.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 3">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_3.png" alt="Salute e benessere">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Promuovere salute e benessere per tutti.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 4">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_4.png" alt="Istruzione di qualità">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Offrire istruzione inclusiva, equa e di qualità.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 5">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_5.png" alt="Parità di genere">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Raggiungere la parità di genere e valorizzare tutte le persone.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 6">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_6.png" alt="Acqua pulita e servizi igienico-sanitari">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Garantire acqua pulita e servizi igienici sicuri.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 7">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_7.png" alt="Energia pulita e accessibile">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Assicurare energia accessibile, affidabile e pulita.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 8">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_8.png" alt="Lavoro dignitoso e crescita economica">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Favorire lavoro dignitoso e crescita economica sostenibile.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 9">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_9.png" alt="Industria, innovazione e infrastrutture">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Costruire infrastrutture resilienti e promuovere innovazione.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 10">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_10.png" alt="Ridurre le disuguaglianze">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Ridurre le disuguaglianze all’interno e tra i paesi.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 11">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_11.png" alt="Città e comunità sostenibili">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Rendere città e comunità inclusive, sicure e sostenibili.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 12">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_12.png" alt="Consumo e produzione responsabili">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Adottare modelli di consumo e produzione responsabili.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 13">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_13.png" alt="Lotta contro il cambiamento climatico">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Agire subito contro il cambiamento climatico.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 14">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_14.png" alt="Vita sott'acqua">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Proteggere mari, oceani e risorse marine.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 15">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_15.png" alt="Vita sulla terra">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Tutelare ecosistemi terrestri, foreste e biodiversità.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 16">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_16.png" alt="Pace, giustizia e istituzioni solide">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Promuovere pace, giustizia e istituzioni solide.
+                  </div>
+                </div>
+              </button>
+
+              <button class="theme-card" type="button" aria-label="Tema 17">
+                <div class="theme-card-inner">
+                  <div class="theme-card-face theme-card-front">
+                    <img src="sources/tema_17.png" alt="Partnership per gli obiettivi">
+                  </div>
+                  <div class="theme-card-face theme-card-back">
+                    Rafforzare cooperazione e partnership globali.
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button class="themes-arrow" id="themesNext" aria-label="Scorri a destra">›</button>
       </div>
     </div>
   </section>
@@ -597,11 +942,11 @@
   </section>
 
   <section class="final-cta">
-	  <div class="wrap">
-		<button class="btn">presto giocabile!</button>
-		<p class="cta-note">Cliccando sul pulsante verrai reindirizzato allo store per il download.</p>
-	  </div>
-	</section>
+    <div class="wrap">
+      <button class="btn">Scopri il gioco</button>
+      <p class="cta-note">Cliccando sul pulsante verrai reindirizzato allo store per il download.</p>
+    </div>
+  </section>
 
   <div class="overlay" id="overlay"></div>
   
@@ -638,6 +983,10 @@
     const drawer = document.getElementById('drawer');
     const overlay = document.getElementById('overlay');
     const scrollIndicator = document.querySelector('.scroll-indicator');
+    const themesScroll = document.getElementById('themesScroll');
+    const themesPrev = document.getElementById('themesPrev');
+    const themesNext = document.getElementById('themesNext');
+    const flipTimers = new Map();
 
     function toggleMenu(show){
       drawer.classList.toggle('show', show);
@@ -701,6 +1050,164 @@
       } else {
         scrollIndicator.classList.remove('hide');
       }
+    });
+
+    function getThemeCards(){
+      return [...document.querySelectorAll('.theme-card')];
+    }
+
+    function getScrollTargets(){
+      const cards = getThemeCards();
+      if (!cards.length) return [];
+      return cards.map(card => card.offsetLeft);
+    }
+
+    function getCurrentTargetIndex(){
+      if (!themesScroll) return 0;
+
+      const targets = getScrollTargets();
+      if (!targets.length) return 0;
+
+      const current = themesScroll.scrollLeft;
+      let bestIndex = 0;
+      let bestDistance = Infinity;
+
+      targets.forEach((value, index) => {
+        const distance = Math.abs(value - current);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = index;
+        }
+      });
+
+      return bestIndex;
+    }
+
+    function getVisibleCardsCount(){
+      const cards = getThemeCards();
+      if (!themesScroll || !cards.length) return 1;
+
+      const firstCard = cards[0];
+      const secondCard = cards[1];
+      let step = firstCard.offsetWidth;
+
+      if (secondCard) {
+        step = secondCard.offsetLeft - firstCard.offsetLeft;
+      }
+
+      return Math.max(1, Math.floor(themesScroll.clientWidth / step));
+    }
+
+    function scrollToTargetIndex(index){
+      if (!themesScroll) return;
+
+      const targets = getScrollTargets();
+      if (!targets.length) return;
+
+      const visibleCards = getVisibleCardsCount();
+      const maxIndex = Math.max(0, targets.length - visibleCards);
+      const safeIndex = Math.max(0, Math.min(index, maxIndex));
+
+      themesScroll.scrollTo({
+        left: targets[safeIndex],
+        behavior: 'smooth'
+      });
+    }
+
+    function updateThemeArrows(){
+      if (!themesPrev || !themesNext || !themesScroll) return;
+
+      const currentIndex = getCurrentTargetIndex();
+      const visibleCards = getVisibleCardsCount();
+      const totalCards = getThemeCards().length;
+      const maxIndex = Math.max(0, totalCards - visibleCards);
+
+      themesPrev.disabled = currentIndex <= 0;
+      themesNext.disabled = currentIndex >= maxIndex;
+    }
+
+    function flipCard(card){
+      if (!card) return;
+
+      if (flipTimers.has(card)) {
+        clearTimeout(flipTimers.get(card));
+        flipTimers.delete(card);
+      }
+
+      card.classList.add('is-flipped');
+
+      const timer = setTimeout(() => {
+        card.classList.remove('is-flipped');
+        flipTimers.delete(card);
+      }, 5000);
+
+      flipTimers.set(card, timer);
+    }
+
+    function unflipCard(card){
+      if (!card) return;
+
+      if (flipTimers.has(card)) {
+        clearTimeout(flipTimers.get(card));
+        flipTimers.delete(card);
+      }
+
+      card.classList.remove('is-flipped');
+    }
+
+    function setupThemeFlipCards(){
+      const cards = getThemeCards();
+
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const isFlipped = card.classList.contains('is-flipped');
+
+          if (isFlipped) {
+            unflipCard(card);
+          } else {
+            flipCard(card);
+          }
+        });
+      });
+    }
+
+    if (themesScroll) {
+      themesScroll.addEventListener('scroll', () => {
+        updateThemeArrows();
+      });
+
+      themesScroll.addEventListener('wheel', (e) => {
+        const canScrollHorizontally = themesScroll.scrollWidth > themesScroll.clientWidth;
+        if (!canScrollHorizontally) return;
+
+        e.preventDefault();
+        themesScroll.scrollLeft += e.deltaY;
+      }, { passive: false });
+    }
+
+    if (themesPrev) {
+      themesPrev.addEventListener('click', () => {
+        const visibleCards = getVisibleCardsCount();
+        const currentIndex = getCurrentTargetIndex();
+        scrollToTargetIndex(currentIndex - visibleCards);
+      });
+    }
+
+    if (themesNext) {
+      themesNext.addEventListener('click', () => {
+        const visibleCards = getVisibleCardsCount();
+        const currentIndex = getCurrentTargetIndex();
+        scrollToTargetIndex(currentIndex + visibleCards);
+      });
+    }
+
+    window.addEventListener('resize', () => {
+      updateThemeArrows();
+    });
+
+    window.addEventListener('load', () => {
+      updateThemeArrows();
+      setupThemeFlipCards();
     });
   </script>
 </body>
